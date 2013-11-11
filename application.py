@@ -1,5 +1,10 @@
 import os
+import sys
 import json
+
+parentdir = os.path.dirname(os.path.abspath(__file__)) + '/requestsdir'
+sys.path.insert(0, parentdir)
+
 import requests
 from requests.auth import HTTPBasicAuth
 import RPi.GPIO as io
@@ -10,6 +15,7 @@ prevLights = {}
 prevEntrances = None
 
 def start(username,password):
+	print 'In start()'
 	print 'username: ' + username + ' password: ' + password
 	initIO()
 	auth=HTTPBasicAuth(username,password)
@@ -26,16 +32,17 @@ def start(username,password):
 	
 
 def updateLights(lights):
+	print 'In updateLights'
 	for light in lights:
 		gpioPin = light['gpio']	
-		print gpioPin
-		print light['status']
+		print 'Light ' + str(light['label']) + ' status: ' + str(light['status']) + ' on pin ' + str(light['gpio'])
 		if light['status'] == True:
 			io.output(gpioPin, io.HIGH)	
 		else:
 			io.output(gpioPin, io.LOW)
 
 def updateEntrances(entrances,auth,PiID):
+	print 'In updateEntrances'
 	global prevEntrances
 
 	statusValues = {1:True,0:False}
@@ -75,6 +82,7 @@ def getPi(user):
 	return raspberryPi
 
 def getLights(auth):
+	print 'In getLights'
 	lightsResponse = requests.get(URL_ROOT+'/light/?format=json',auth=auth)
 	light_count = lightsResponse.json()['meta']['total_count']
 
@@ -83,18 +91,25 @@ def getLights(auth):
 	return lights
 
 def getEntrances(auth):
+	print 'In getEntrances'
 	entrancesResponse = requests.get(URL_ROOT+'/entrance/?format=json',auth=auth)
 	entrance_count = entrancesResponse.json()['meta']['total_count']
 	print entrancesResponse.json()
 	entrances = entrancesResponse.json()['objects'][0]
 
-
 	return entrances
 
 def initIO():
+	#set Pi BCM mode to access GPIO pins
 	io.setmode(io.BCM)
+	#set light pins to output mode
 	io.setup(4, io.OUT)
+	io.setup(17, io.OUT)
+	io.setup(18, io.OUT)
+	#set window/door pins to input mode and 
+	#activate pull-up resistors
 	io.setup(24, io.IN, pull_up_down=io.PUD_UP)
+	io.setup(22, io.IN, pull_up_down=io.PUD_UP)
 	
 	
 	

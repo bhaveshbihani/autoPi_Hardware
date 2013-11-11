@@ -1,10 +1,20 @@
-from Tkinter import *
+import sys
+import os
 from application import *
 from autoPiStartup import *
-import tkMessageBox
 from register import *
+from register import defaultComponentRegistration
+
+parentdir = os.path.dirname(os.path.abspath(__file__))
+requestsdir = parentdir + '/requestsdir'
+tkinterdir = parentdir + '/tkinterdir'
+
+sys.path.insert(0, requestsdir)
+sys.path.insert(0, tkinterdir)
+
+from Tkinter import *
+import tkMessageBox
 import requests
-import os
 import json
 
 URL_ROOT = 'http://autopi.herokuapp.com/api/v1'
@@ -64,11 +74,11 @@ def setRegisterError(component):
 
 
 
-
-
 homepath = os.environ['HOME']
+print 'Homepath = ' + str(homepath)
 
 config_exists = os.path.exists(homepath + '/autopi.config')
+print 'config_exists = ' + str(config_exists)
 
 if config_exists != True:
 	print('autopi.config doesn''t exist. Creating.')
@@ -81,9 +91,6 @@ if UserSaved(homepath) == True:
 	username = config.get('LoginInfo','username')
 	password = config.get('LoginInfo','password')
 
-	username ='test5'
-	password = 'test'
-	
 	print('Username: ' + username)
 	print('Password: ' + password)
 	
@@ -110,7 +117,7 @@ if UserSaved(homepath) == True:
 			exit()
 
 		defaultComponentRegistation(username,password)
-
+	
 else:
 	print('User not saved')
 	root = Tk()

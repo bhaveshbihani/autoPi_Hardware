@@ -10,7 +10,7 @@ def registerPi(username, password):
 	print('In registerPi')
 	auth = HTTPBasicAuth(username, password)
 
-	mac =1234999999999  # get_mac()
+	mac =124999  # get_mac()
 	print('mac: ' + str(mac))
 
 	data = {'uuid': mac}
@@ -41,17 +41,57 @@ def defaultComponentRegistration(username,password):
 	raspberryPi = user['raspberry_pi'][0]
 	headers = {'Content-type':'application/json'}
 
-	data = {'raspberry_pi_id':raspberryPi['id'],'status':False,'gpio':4,'label':'Light One'}
+	#Create light on Pin 4 with Label 'Light One' set to initial state=off
+	data = {'raspberry_pi_id':raspberryPi['id'],
+			'status':False,
+			'gpio':4,
+			'label':'Light One'}
 
+	#Register light
 	light_response = requests.post(URL_ROOT+'/light/?format=json',data=json.dumps(data),headers=headers,auth=auth)
 	print('Light 1')
 	print(light_response)
 	print(light_response.json())
 
+	#Create light on Pin 17 with Label 'Light Two' set ot initial state=on
+	data['status'] = True
+	data['gpio']  = 17
+	data['label'] = 'Light Two'
+
+	#Register light
+	light_response = requests.post(URL_ROOT+'/light/?format=json',data=json.dumps(data),headers=headers,auth=auth)
+	print('Light 2')
+	print(light_response)
+	print(light_response.json())
+
+	#Create light on Pin 18 with Label 'Light Two' set ot initial state=on
+	data['status'] = True
+	data['gpio']  = 18
+	data['label'] = 'Light Three'
+	
+	#Register light
+	light_response = requests.post(URL_ROOT+'/light/?format=json',data=json.dumps(data),headers=headers,auth=auth)
+	print('Light 2')
+	print(light_response)
+	print(light_response.json())
+	#Create door on Pin 24 with Label 'Front Door'
 	data['gpio'] = 24
 	data['label'] = 'Front Door'
+	data['type'] = 'door'
 
+	#Register door
 	entrance_response = requests.post(URL_ROOT+'/entrance/?format=json',data=json.dumps(data),headers=headers,auth=auth)
-	print('Entrance 1')
+	print('Front Door')
+	print(entrance_response)
+	print(entrance_response.json())
+
+	#Create window on Pin 22 with Label 'Living Room Window'
+	data['gpio'] = 22
+	data['label'] = 'Living Room Window'
+	data['type'] = 'window'
+
+	#Register Window 
+	entrance_response = requests.post(URL_ROOT+'/entrance/?format=json',data=json.dumps(data),headers=headers,auth=auth)
+	print('Living Room Window')
 	print(entrance_response)
 	print(entrance_response.json())

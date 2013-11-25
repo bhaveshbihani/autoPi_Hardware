@@ -12,7 +12,6 @@ class webServer:
     data = ''
     response = ''
     def __init__(self,username,password):
-        print username,password
         self.setUsername(username)
         self.setPassword(password)
         self.setAuth(username,password)

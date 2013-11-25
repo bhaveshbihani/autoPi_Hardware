@@ -43,6 +43,18 @@ class webServer:
             return True
         else:
             return False
+    def putToDatabase(self,data,endPoint):
+        self.setData(data)
+        self.response = requests.put(
+                self.urlRoot+endPoint,
+		data=json.dumps(data),
+		headers={'Content-type': 'application/json'},
+		auth=self.auth
+        )
+        if self.checkResponse(self.response):
+            return True
+        else:
+            return False
     def getFromDatabase(self,endPoint):
         self.response = requests.get(
                self.urlRoot + endPoint,

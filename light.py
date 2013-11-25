@@ -10,14 +10,7 @@ class light:
     response = ''
     lightEndPoint = '/light/?format=json'
     lights = ''
-    
-    def __init__(self,webServer):
-        self.updateLightInfo(webServer)
-        if self.lights:
-            self.setPins()
-        else:
-            print 'No Lights Registered!'
-            
+       
     def setTotalLights(self,totalLights):
         self.totalLights = totalLIghts
     
@@ -48,7 +41,7 @@ class light:
         if webServer.postToDatabase(data,self.lightEndPoint):
             return 'Light with GPIO: '+ str(GPIO) +' successfully registered'
         else:
-            return 'Problem registering light with GPIO:',GPIO
+            return 'Problem registering light with GPIO: '+str(GPIO)
         
         
 #web = webServer('shawn','shawn')

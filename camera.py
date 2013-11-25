@@ -21,14 +21,17 @@ class camera:
                 'status': False,
                 'label' : label
                 }
-        return webServer.postToDatabase(data,self.cameraEndPoint)
+        if webServer.postToDatabase(data,self.cameraEndPoint):
+            return 'Camera successfully registered'
+        else:
+            return 'Error registering Camera'
     
     def setIpAddress(self,ipAddress):
         self.ipAddress = ipAddress
 
 
-web = webServer('shawn','shawn')
-pi = raspberryPi(web)
-cam = camera()
-cam.setIpAddress('69.243.172.96')
-print cam.registerCamera(web,pi,'Living Room')
+#web = webServer('shawn','shawn')
+#pi = raspberryPi(web)
+#cam = camera()
+#cam.setIpAddress('69.243.172.96')
+#print cam.registerCamera(web,pi,'Living Room')

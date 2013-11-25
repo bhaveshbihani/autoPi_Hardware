@@ -12,14 +12,33 @@ class light:
     lights = ''
     
     def __init__(self,webServer):
-        self.response = webServer.getFromDatabase(self.lightEndPoint)
-        self.totalLights = self.response.json()['meta']['total_count']
-        self.lights = self.response.json()['objects']
+        self.updateLightInfo(webServer)
+        if self.lights:
+            self.setPins()
+        else:
+            print 'No Lights Registered!'
+            
     def setTotalLights(self,totalLights):
         self.totalLights = totalLIghts
     
-    def updataStatus(self,webServer):
-        print hello
+    def setPins(self):
+        for light in self.lights:
+            gpioPin = light['gpio']
+            io.setup(gpioPin,io.OUT)
+    
+    def updateLightInfo(self,webServer):
+        self.response = webServer.getFromDatabase(self.lightEndPoint)
+        self.totalLights = self.response.json()['meta']['total_count']
+        self.lights = self.response.json()['objects']
+        
+    def updateStatus(self,webServer):
+        self.updateLightInfo(webServer)
+        for light in self.lights:
+            gpioPin = light['gpio']
+            if light['status'] == True:
+                io.output(gpioPin,io.HIGH)
+            else:
+                io.output(gpioPin,io.LOW)
     
     def registerLight(self,GPIO,label,webServer,raspberryPi):
         data = {'raspberry_pi_id':raspberryPi.getId(),
@@ -35,4 +54,4 @@ class light:
 #web = webServer('shawn','shawn')
 #pi = raspberryPi(web)
 #light = light(web)
-#print light.registerLight(4,'Living Room',web,pi)
+#light.updateStatus(web)

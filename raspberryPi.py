@@ -3,7 +3,7 @@ import sys
 import json
 from webServer import *
 from uuid import getnode as getMac
-
+import RPi.GPIO as io
 
 class raspberryPi:
     allUserInfo = ''
@@ -17,6 +17,8 @@ class raspberryPi:
     def __init__(self,webServer):
         self.getPiData(webServer)
         self.mac = getMac()
+        io.setmode(io.BCM)
+        
     def registerPi(self,webServer):
         data = {'uuid': self.mac}
         if webServer.postToDatabase(data,self.piEndPoint):

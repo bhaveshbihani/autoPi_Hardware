@@ -27,6 +27,7 @@ def SaveUser(path,username,password):
 	config = ConfigParser.ConfigParser()
 	config.read(path+'/autopi.config')
 	config_file = open(path+'/autopi.config','w')
+	config.add_section('LoginInfo')
 	config.set('LoginInfo','Username',username)
 	config.set('LoginInfo','Password',password)
 	config.write(config_file)

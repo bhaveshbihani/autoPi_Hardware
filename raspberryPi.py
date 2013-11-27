@@ -27,8 +27,11 @@ class raspberryPi:
             return 'Problem registering RaspberryPi'
     def getPiData(self,webServer):
         self.response = webServer.getFromDatabase(self.userEndPoint)
-        self.allUserInfo = self.response .json()
-        self.user = self.allUserInfo['objects'][0]
+        if not self.response:
+            return
+        else: 
+            self.allUserInfo = self.response.json() 
+            self.user = self.allUserInfo['objects'][0]
         if self.user['raspberry_pi']:
             self.raspberryPi = self.user['raspberry_pi'][0]
             self.id = self.raspberryPi['id']

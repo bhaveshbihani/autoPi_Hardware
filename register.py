@@ -6,23 +6,23 @@ from alarm import *
 
 
 class register:
-    def __init__(self,webServer,raspberryPi,light,camera,alarm):
-        self.componentRegistration(webServer,raspberryPi,light,camera,alarm)
+    def __init__(self,webServer,raspberryPi,light,camera,alarm,blind):
+        self.componentRegistration(webServer,raspberryPi,light,camera,alarm,blind)
     
-    def componentRegistration(self,webServer,raspberryPi,light,camera,alarm):
-        #print raspberryPi.registerPi(webServer)
-        #print light.registerLight(4,'Living Room',webServer,raspberryPi)
-        #print light.registerLight(8,'Bed Room',webServer,raspberryPi)
-        #cam.setIpAddress('69.243.172.96')
-        #print cam.registerCamera(webServer,raspberryPi,'Living Room')
+    def componentRegistration(self,webServer,raspberryPi,light,camera,alarm,blind):
+        print raspberryPi.registerPi(webServer)
+        print light.registerLight(4,'Living Room',webServer,raspberryPi)
+        print light.registerLight(8,'Bed Room',webServer,raspberryPi)
+        cam.setIpAddress('69.243.172.96')
+        print cam.registerCamera(webServer,raspberryPi,'Living Room')
         print alarm.registerAlarm(24,'Front Door','door',webServer,raspberryPi)
+        print blind.registerBlinds(5,'Living Room',raspberryPi,webServer)
         
         
         
-        
-web = webServer('shawn','shawn')
-pi = raspberryPi(web)
-cam = camera()
-light = light()
-alarm = alarm(web)
-reg = register(web,pi,light,cam,alarm)
+#web = webServer()
+#web.setUsername('shawn1')
+#web.setPassword('shawn')
+#web.setAuth()
+#pi = raspberryPi(web)
+#print pi.registerPi(web)

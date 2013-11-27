@@ -11,10 +11,6 @@ class webServer:
     auth = ''
     data = ''
     response = ''
-    def __init__(self,username,password):
-        self.setUsername(username)
-        self.setPassword(password)
-        self.setAuth(username,password)
 
     def setPassword(self,password):
         self.password = password
@@ -22,8 +18,8 @@ class webServer:
     def setUsername(self,username):
         self.username = username
         
-    def setAuth(self,username,password):
-        self.auth = HTTPBasicAuth(username,password)
+    def setAuth(self):
+        self.auth = HTTPBasicAuth(self.username,self.password)
         
     def setData(self,data):
         self.data = data

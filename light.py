@@ -6,13 +6,10 @@ from raspberryPi import *
 import RPi.GPIO as io
 
 class light:
-    totalLights = 0
     response = ''
     lightEndPoint = '/light/?format=json'
     lights = ''
        
-    def setTotalLights(self,totalLights):
-        self.totalLights = totalLIghts
     
     def setPins(self):
         for light in self.lights:

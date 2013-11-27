@@ -64,10 +64,3 @@ class alarm:
                     
             
             
-web = webServer('shawn','shawn')
-pi = raspberryPi(web)
-door = alarm()
-door.updateAlarmInfo(web)         
-door.initPorts()
-door.updateStatus()
-door.updateAlarm(web,pi)

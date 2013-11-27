@@ -3,11 +3,8 @@ from webServer import *
 from raspberryPi import *
 
 class camera:
-    ipAddress = ''
+    ipAddress = '0.0.0.0'
     cameraEndPoint = '/video_stream/?format=json'
-    
-    def __init__(self):
-        self.data =[]
 	
     def takePicture(self,pictureName,pictureWidth,pictureHeight):
         call([ "raspistill","--nopreview","-t","500","-w",pictureWidth,"-h",pictureHeight,"-vf","-o",pictureName])

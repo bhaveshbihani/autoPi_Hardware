@@ -12,6 +12,7 @@ from alarm import *
 from blinds import *
 from gui import *
 
+
 web=webServer()	
 homepath = '/home/pi/'
 print homepath
@@ -21,7 +22,7 @@ if not os.path.exists(homepath + '/autopi.config'):
     root = Tk()
     root.wm_title('AutoPi Login')
     app = registerGUI(root,web)
-    root.mainloop()
+    print root.mainloop()
     
     pi = raspberryPi(web)
     light = light()

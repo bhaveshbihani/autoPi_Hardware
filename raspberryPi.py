@@ -20,7 +20,7 @@ class raspberryPi:
         io.setmode(io.BCM)
         
     def registerPi(self,webServer):
-        data = {'uuid': self.mac}
+        data = {'uuid': 567568345} #self.mac}
         if webServer.postToDatabase(data,self.piEndPoint):
             return 'RaspberryPi successfully register'
         else:

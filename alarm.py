@@ -21,12 +21,14 @@ class alarm:
             io.setup(alarm['gpio'], io.IN, pull_up_down=io.PUD_UP)
             
     def registerAlarm(self,GPIO,label,type,webServer,raspberryPi):
+        print 'Type: ' + str(type)
         data = {'raspberry_pi_id':raspberryPi.getId(),
 			'status':False,
 			'gpio':GPIO,
 			'label':label,
 			'type' :type
 			}
+        print data
         if webServer.postToDatabase(data,self.alarmEndPoint):
             return 'Alarm with GPIO: ' + str(GPIO) + ' successfully registered'
         else:
@@ -70,18 +72,20 @@ class alarm:
                     
 '''            
 web = webServer()
-web.setUsername('test3')
+web.setUsername('test7')
 web.setPassword('test')
 web.setAuth()
 pi = raspberryPi(web)
 door = alarm()
+print door.registerAlarm(17,'Front Door', 'door', web, pi)
+print door.registerAlarm(22,'Back Door', 'door', web, pi)
 door.updateAlarmInfo(web)
 door.initPorts()
+door.updateStatus()
 
 while 1:
 	print 'Start Loop'
 	door.updateAlarmInfo(web)
-	door.updateStatus()
 	door.updateAlarm(web,pi)
 	time.sleep(1)
- '''         
+'''

@@ -40,8 +40,19 @@ class light:
         else:
             return 'Problem registering light with GPIO: '+str(GPIO)
         
-        
-#web = webServer('shawn','shawn')
-#pi = raspberryPi(web)
-#light = light(web)
-#light.updateStatus(web)
+'''        
+web = webServer()
+web.setUsername('test7')
+web.setPassword('test')
+web.setAuth()
+pi = raspberryPi(web)
+print pi.registerPi(web)
+pi.getPiData(web)
+light = light()
+light.registerLight(4, 'Living Room',web,pi)
+light.registerLight(8, 'Kitchen',web,pi)
+light.updateLightInfo(web)
+light.setPins()
+while 1:
+	light.updateStatus(web)
+'''

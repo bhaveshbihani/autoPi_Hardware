@@ -30,7 +30,7 @@ if not os.path.exists(homepath + '/autopi.config'):
     blind = blinds()
     reg = register(web,pi,light,camera,alarm,blind)
 else:
-    config = ConfigParser.ConfigParser()
+    config = ConfigParser.ConfigParser() 
     config.read(homepath+'/autopi.config')
     username = config.get('LoginInfo','username')
     password = config.get('LoginInfo','password')
@@ -38,7 +38,22 @@ else:
     web.setUsername(username)
     web.setPassword(password)
     web.setAuth()
-	
+    pi = raspberryPi(web)
+    light = light()
+    cam = camera()
+    alarm = alarm()
+    blind = blinds()
+
+alarm.updateAlarmInfo(web)    
+alarm.updateStatus() 
+alarm.initPorts()
+light.updateLightInfo(web)
+light.setPins() 
+
+while True:
+    light.updateStatus(web)
+    alarm.updateAlarm(web,pi)
+    blind.updateBlinds(web)	
 
 
 

@@ -41,7 +41,6 @@ class registerGUI:
             return 
         self.createConfig()
         print self.SaveUser(self.homepath,self.username.get(),self.password.get())
-        global root
         root.quit()		
    
 	

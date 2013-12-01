@@ -3,13 +3,12 @@ import sys
 import json
 import RPi.GPIO as io
 from webServer import *
-from raspberryPi import *
 import time
 
 class alarm:
     alarmEndPoint = '/entrance/?format=json'
     alarmCount = 0
-    alarms = ''
+    alarms = []
     response = ''
     statusValues = {1:True,0:False}
     alarmStatus = [2,2,2,2,2]
@@ -34,16 +33,13 @@ class alarm:
         else:
             return 'Probelm registering Alarm with GPIO: ' + str(GPIO)
 
-    def updateAlarmInfo(self,webServer):
-        self.response = webServer.getFromDatabase(self.alarmEndPoint)
-        self.alarmCount = self.response.json()['meta']['total_count']
-        self.alarms = self.response.json()['objects']
-    
+    def updateAlarmInfo(self,alarm):
+        self.alarms = alarm
 	#This function is not needed
 	#Only need updateAlarmInfo and updateAlarm to detect change in sensor
 	#using this function along with the other two cuases alarmStatus to be
 	#overwritten with new value before it is checked in updateAlarm 
-    def updateStatus(self): 
+    def updateStatus(self):
         for alarm in self.alarms:
             if alarm['alarm']:
                 self.alarmStatus[self.index] =  io.input(alarm['gpio'])
@@ -53,7 +49,6 @@ class alarm:
         self.index = 0
     
     def updateAlarm(self,webServer,raspberryPi):
-        self.updateAlarmInfo(webServer)
         for alarm in self.alarms:
             if alarm['alarm']:
                 currentStatus = io.input(alarm['gpio'])

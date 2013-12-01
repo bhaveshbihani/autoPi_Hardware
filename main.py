@@ -45,16 +45,17 @@ else:
     alarm = alarm()
     blind = blinds()
 
-alarm.updateAlarmInfo(web)    
+pi.updatePiInfo(web,light,blind,alarm)  
 alarm.updateStatus() 
 alarm.initPorts()
-light.updateLightInfo(web)
 light.setPins() 
-
+cam.startCameraServer()
 while True:
-    light.updateStatus(web)
+    pi.updatePiInfo(web,light,blind,alarm)
+    light.updateStatus()
     alarm.updateAlarm(web,pi)
-    blind.updateBlinds(web)	
-
+    blind.updateBlinds()	
+    cam.updateStatus(web)
+    print 'loop'
 
 

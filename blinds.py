@@ -2,7 +2,6 @@ import RPi.GPIO as io
 from time import sleep
 from time import clock
 from webServer import *
-from raspberryPi import *
 from time import sleep
 
 class blinds:
@@ -30,11 +29,11 @@ class blinds:
 	else:
 	    return 'Error registering Blinds'
     
-    def updateBlinds(self,webServer):
-        self.response = webServer.getFromDatabase(self.blindsEndPoint)
-        self.blinds = self.response.json()['objects']
+    def updateBlindInfo(self,blind):
+        self.blinds = blind
+    
+    def updateBlinds(self):
         for blind in self.blinds:
-            print blind['status']
             if blind['status'] and self.blindsStatus[self.index] == 1 :
                 print 'open'
                 self.open()

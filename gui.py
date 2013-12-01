@@ -41,7 +41,14 @@ class registerGUI:
             return 
         self.createConfig()
         print self.SaveUser(self.homepath,self.username.get(),self.password.get())
+<<<<<<< HEAD
         root.destroy()		
+=======
+        try:
+            root.quit()		
+        except:
+            tkMessageBox.showinfo('Registration Complete','Registration successful\nPlease close all windows.')
+>>>>>>> fe1b11be679c8361120e7c5e67a294bf0cd2a15f
    
 	
     def setNoInternetError(self):
@@ -71,5 +78,16 @@ class registerGUI:
          open(self.homepath+'/autopi.config','w').close()
 
 
-    		
+'''    		
+web=webServer()
+homepath='/home/pi/'
 
+if not os.path.exists(homepath+'autopi.config'):
+	print 'User not saved'
+	root = Tk()
+	root.wm_title('AutoPi Login')
+	app = registerGUI(root,web)
+	root.mainloop()
+
+	print 'Out of main loop'
+'''

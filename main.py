@@ -23,10 +23,13 @@ if not os.path.exists(homepath + '/autopi.config'):
     root.wm_title('AutoPi Login')
     app = registerGUI(root,web)
     print root.mainloop()
+
+    print 'Web' 
+    print web
     
     pi = raspberryPi(web)
     light = light()
-    cam = camera()
+    camera = camera()
     alarm = alarm()
     blind = blinds()
     reg = register(web,pi,light,camera,alarm,blind)
@@ -49,13 +52,13 @@ pi.updatePiInfo(web,light,blind,alarm)
 alarm.updateStatus() 
 alarm.initPorts()
 light.setPins() 
-cam.startCameraServer()
+camera.startCameraServer()
 while True:
     pi.updatePiInfo(web,light,blind,alarm)
     light.updateStatus()
     alarm.updateAlarm(web,pi)
     blind.updateBlinds()	
-    cam.updateStatus(web)
+    camera.updateStatus(web)
     print 'loop'
 
 

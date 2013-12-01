@@ -1,13 +1,19 @@
 from subprocess import call
 from webServer import *
-from raspberryPi import *
+from os import system
 
 class camera:
     ipAddress = '0.0.0.0'
     cameraEndPoint = '/video_stream/?format=json'
+    response = ''
+    camera = ''
 	
     def takePicture(self,pictureName,pictureWidth,pictureHeight):
         call([ "raspistill","--nopreview","-t","500","-w",pictureWidth,"-h",pictureHeight,"-vf","-o",pictureName])
+    
+    def updateCameraInfo(self,webServer):
+        self.response = webServer.getFromDatabase(self.cameraEndPoint)
+        self.camera = self.response.json()['objects']
     
     def registerCamera(self,webServer,raspberryPi,label):
         data={
@@ -25,10 +31,26 @@ class camera:
     
     def setIpAddress(self,ipAddress):
         self.ipAddress = ipAddress
+    
+    def startCameraServer(self):
+        call(["mjpg_streamer","-i","/usr/local/lib/input_file.so -f /tmp -n pic.jpg","-o","/usr/local/lib/output_http.so -w /usr/local/www -p 9000","-b"])
+    
+    def updateStatus(self,webServer):
+        self.updateCameraInfo(webServer)
+        for cam in self.camera:
+            if cam['status'] == True:
+                call(["raspistill","--nopreview","-w","640","-h","480","-q","80","-o","/tmp/pic.jpg","-t","100","-vf"])
 
 
-#web = webServer('shawn','shawn')
+#web = webServer()
+#web.setUsername('shawn')
+#web.setPassword('shawn')
+#web.setAuth()
 #pi = raspberryPi(web)
 #cam = camera()
-#cam.setIpAddress('69.243.172.96')
-#print cam.registerCamera(web,pi,'Living Room')
+#cam.takePicture('shawn.jpg','50','50')
+#cam.startCameraServer()
+#while True:
+#    cam.updateStatus(web)
+#    print 'hello'
+

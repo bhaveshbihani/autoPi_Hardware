@@ -2,8 +2,13 @@ import os
 import sys
 import json
 from webServer import *
+from light import *
+from blinds import *
+from alarm import *
+from camera import *
 from uuid import getnode as getMac
 import RPi.GPIO as io
+
 
 class raspberryPi:
     allUserInfo = ''
@@ -18,7 +23,13 @@ class raspberryPi:
         self.getPiData(webServer)
         self.mac = getMac()
         io.setmode(io.BCM)
-        
+    
+    def updatePiInfo(self,webServer,light,blind,alarm):
+        response = webServer.getFromDatabase(self.userEndPoint)        
+        light.updateLightInfo(response.json()['objects'][0]['lights'])
+        blind.updateBlindInfo(response.json()['objects'][0]['blinds'])
+        alarm.updateAlarmInfo(response.json()['objects'][0]['entrance'])
+      
     def registerPi(self,webServer):
         data = {'uuid': 567568345} #self.mac}
         if webServer.postToDatabase(data,self.piEndPoint):
@@ -41,5 +52,14 @@ class raspberryPi:
         return self.id
         
         
-#web = webServer('shawn','shawn')
+#web = webServer()
+#light = light()
+#blind = blinds()
+#cam = camera()
+#alarm = alarm()
+#web.setUsername('shawn')
+#web.setPassword('shawn')
+#web.setAuth()
+
 #pi = raspberryPi(web)
+#pi.updatePiInfo(web,light,blind,alarm)

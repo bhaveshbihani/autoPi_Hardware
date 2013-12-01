@@ -7,6 +7,7 @@ class camera:
     cameraEndPoint = '/video_stream/?format=json'
     response = ''
     camera = ''
+    status = 0
 	
     def takePicture(self,pictureName,pictureWidth,pictureHeight):
         call([ "raspistill","--nopreview","-t","500","-w",pictureWidth,"-h",pictureHeight,"-vf","-o",pictureName])
@@ -38,8 +39,9 @@ class camera:
     def updateStatus(self,webServer):
         self.updateCameraInfo(webServer)
         for cam in self.camera:
-            if cam['status'] == True:
-                call(["raspistill","--nopreview","-w","640","-h","480","-q","80","-o","/tmp/pic.jpg","-t","100","-vf"])
+            if cam['status'] == True and status = 0:
+                call(["raspistill","--nopreview","-w","640","-h","480","-q","80","-o","/tmp/pic.jpg","-tl","100","-t","9999999","-vf","-th","0:0:0","&"])
+                status = 1
 
 
 #web = webServer()

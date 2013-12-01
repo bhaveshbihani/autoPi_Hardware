@@ -45,6 +45,8 @@ else:
     alarm = alarm()
     blind = blinds()
 
+
+reg = register(web,pi,light,cam,alarm,blind)
 pi.updatePiInfo(web,light,blind,alarm)  
 alarm.updateStatus() 
 alarm.initPorts()

@@ -41,7 +41,7 @@ class registerGUI:
             return 
         self.createConfig()
         print self.SaveUser(self.homepath,self.username.get(),self.password.get())
-        root.quit()		
+        root.destroy()		
    
 	
     def setNoInternetError(self):

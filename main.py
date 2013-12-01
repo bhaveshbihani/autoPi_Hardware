@@ -22,7 +22,7 @@ if not os.path.exists(homepath + '/autopi.config'):
     root = Tk()
     root.wm_title('AutoPi Login')
     app = registerGUI(root,web)
-    print root.mainloop()
+    root.mainloop()
 
     print 'Web' 
     print web

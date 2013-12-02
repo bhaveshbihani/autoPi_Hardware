@@ -11,9 +11,18 @@ from camera import *
 from alarm import *
 from blinds import *
 from gui import *
+import urllib2
 
+def setNoInternetError():
+    tkMessageBox.showinfo('Error','No Internet Connection')
+    print 'No internet'
+    exit(2)
 
 web=webServer()	
+if not web.testNetwork():
+    print 'No internet'
+    setNoInternetError()
+
 homepath = '/home/pi/'
 print homepath
 print os.path.exists(homepath + '/autopi.config')
@@ -52,13 +61,11 @@ pi.updatePiInfo(web,light,blind,alarm)
 alarm.updateStatus() 
 alarm.initPorts()
 light.setPins() 
-camera.startCameraServer()
+#camera.startCameraServer()
 while True:
     pi.updatePiInfo(web,light,blind,alarm)
     light.updateStatus()
     alarm.updateAlarm(web,pi)
     blind.updateBlinds()	
-    camera.updateStatus(web)
+#    camera.updateStatus(web)
     print 'loop'
-
-

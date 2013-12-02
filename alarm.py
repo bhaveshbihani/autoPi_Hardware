@@ -25,7 +25,7 @@ class alarm:
 			'status':False,
 			'gpio':GPIO,
 			'label':label,
-			'type' :type
+			'entrance_type' :type
 			}
         print data
         if webServer.postToDatabase(data,self.alarmEndPoint):

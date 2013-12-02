@@ -20,14 +20,12 @@ class alarm:
             io.setup(alarm['gpio'], io.IN, pull_up_down=io.PUD_UP)
             
     def registerAlarm(self,GPIO,label,type,webServer,raspberryPi):
-        print 'Type: ' + str(type)
         data = {'raspberry_pi_id':raspberryPi.getId(),
 			'status':False,
 			'gpio':GPIO,
 			'label':label,
-			'type' :type
+			'entrance-type' :type
 			}
-        print data
         if webServer.postToDatabase(data,self.alarmEndPoint):
             return 'Alarm with GPIO: ' + str(GPIO) + ' successfully registered'
         else:

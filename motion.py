@@ -5,6 +5,7 @@ from subprocess import call
 class motion:
     currentImage = Image.new('RGB',(150,150),"black")
     prevImage = Image.new('RGB',(150,150),"black")
+    alarmEndPoint = '/entrance/?format=json'
     camera = camera()
     width = 0
     height = 0
@@ -46,26 +47,15 @@ class motion:
         self.prevImage = Image.open("/home/pi/Desktop/prevImage.jpg")
     def setWidthHeight(self):
         self.width,self.height = self.prevImage.size
-        
-
-
-motion = motion()
-hold = 0
-while hold is 0:
-    if motion.movement():
-        print 'Alarm'
-#pic = Image.open("/home/pi/test1.jpg")
-#testpic = Image.new('RGB',(150,150),"black")
-
-
-#pixels = pic.load()
-#test = tsetpic.load()
-#x = 0
-#y = 0
-#while y<height:
- #   while x<width:
- #       currentpic = pixels[x,y]
- #       x+=1
- #   y+=1
-
+    def registerMotionAlarm(self,webServer)
+        data = {'raspberry_pi_id':raspberryPi.getId(),
+			'status':False,
+			'gpio':30,
+			'label':'Motion Alarm',
+			'entrance-type' :'door'
+			}
+        if webServer.postToDatabase(data,self.alarmEndPoint):
+            return 'Motion Alarm successfully registered'
+        else:
+            return 'Probelm registering Motion Alarm'
 

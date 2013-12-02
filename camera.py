@@ -1,6 +1,7 @@
-from subprocess import call
+from subprocess import *
 from webServer import *
 from os import system
+from raspberryPi import *
 
 class camera:
     ipAddress = '0.0.0.0'
@@ -8,6 +9,7 @@ class camera:
     response = ''
     camera = ''
     status = 0
+    PID = ''
 	
     def takePicture(self,pictureName,pictureWidth,pictureHeight):
         call([ "raspistill","--nopreview","-t","500","-w",pictureWidth,"-h",pictureHeight,"-vf","-o",pictureName])
@@ -39,20 +41,25 @@ class camera:
     def updateStatus(self,webServer):
         self.updateCameraInfo(webServer)
         for cam in self.camera:
-            if cam['status'] == True and status = 0:
-                call(["raspistill","--nopreview","-w","640","-h","480","-q","80","-o","/tmp/pic.jpg","-tl","100","-t","9999999","-vf","-th","0:0:0","&"])
-                status = 1
-
-
-#web = webServer()
-#web.setUsername('shawn')
-#web.setPassword('shawn')
-#web.setAuth()
-#pi = raspberryPi(web)
-#cam = camera()
+            if (cam['status'] and self.status == 0):
+                self.PID =Popen(['raspistill','--nopreview','-w','640','-h','480','-q','80','-o','/tmp/pic.jpg','-tl','100','-t','99999999','-vf','-hf','-th','0:0:0'])
+                self.status = 1
+                print 'camera on'
+            elif (not cam['status'] and self.status == 1):
+                call(['sudo','kill',str(self.PID.pid)])
+                self.status=0
+                print 'camera off'
+'''
+web = webServer()
+web.setUsername('shawn')
+web.setPassword('shawn')
+web.setAuth()
+pi = raspberryPi(web)
+cam = camera()
 #cam.takePicture('shawn.jpg','50','50')
-#cam.startCameraServer()
-#while True:
-#    cam.updateStatus(web)
-#    print 'hello'
+cam.startCameraServer()
+while True:
+    cam.updateStatus(web)
+    print 'hello'
 
+'''

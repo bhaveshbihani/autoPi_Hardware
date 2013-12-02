@@ -41,14 +41,11 @@ class registerGUI:
             return 
         self.createConfig()
         print self.SaveUser(self.homepath,self.username.get(),self.password.get())
-<<<<<<< HEAD
         root.destroy()		
-=======
         try:
             root.quit()		
         except:
             tkMessageBox.showinfo('Registration Complete','Registration successful\nPlease close all windows.')
->>>>>>> fe1b11be679c8361120e7c5e67a294bf0cd2a15f
    
 	
     def setNoInternetError(self):

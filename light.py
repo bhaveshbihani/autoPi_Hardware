@@ -14,6 +14,7 @@ class light:
     def setPins(self):
         for light in self.lights:
             gpioPin = light['gpio']
+            print light['gpio']
             io.setup(gpioPin,io.OUT)
     
     def updateLightInfo(self,light):
@@ -24,6 +25,7 @@ class light:
             gpioPin = light['gpio']
             if light['status'] == True:
                 io.output(gpioPin,io.HIGH)
+                print 'light on'
             else:
                 io.output(gpioPin,io.LOW)
     

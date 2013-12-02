@@ -5,7 +5,7 @@ from webServer import *
 from light import *
 from blinds import *
 from alarm import *
-from camera import *
+
 from uuid import getnode as getMac
 import RPi.GPIO as io
 

@@ -19,8 +19,8 @@ class register:
         print alarm.registerAlarm(24,'Front Door','door',webServer,raspberryPi)
         print blind.registerBlinds(5,'Living Room',raspberryPi,webServer)
         print alarm.registerAlarm(22,'Front Door','door',webServer,raspberryPi)
-        print alarm.registerAlarm(17,'Back Door','door',webServer,raspberryPi)
-#        print blind.registerBlinds(5,'Living Room',raspberryPi,webServer)
+        print alarm.registerAlarm(17,'Living Room','window',webServer,raspberryPi)
+        print blind.registerBlinds(5,'Living Room',raspberryPi,webServer)
         
         
         

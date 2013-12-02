@@ -11,9 +11,15 @@ from camera import *
 from alarm import *
 from blinds import *
 from gui import *
-
+from error import *
+import urllib2
 
 web=webServer()	
+#Check network connection
+if not web.testNetwork():
+    err = error()
+    err.setNoNetworkError()
+
 homepath = '/home/pi/'
 print homepath
 print os.path.exists(homepath + '/autopi.config')
@@ -43,6 +49,9 @@ else:
     web.setPassword(password)
     web.setAuth()
     pi = raspberryPi(web)
+    if not pi.response:
+        err = error()
+        err.setLoginError()	
     light = light()
     cam = camera()
     alarm = alarm()
@@ -51,16 +60,25 @@ else:
 
 #reg = register(web,pi,light,cam,alarm,blind)
 pi.updatePiInfo(web,light,blind,alarm)  
-alarm.updateStatus() 
 alarm.initPorts()
+alarm.updateStatus() 
 light.setPins() 
+<<<<<<< HEAD
 cam.startCameraServer()
 blind.initStatus()
+=======
+#camera.startCameraServer()
+>>>>>>> 9ad586861bc71739fe933784a6365b3d083f7681
 while True:
     pi.updatePiInfo(web,light,blind,alarm)
     light.updateStatus()
     alarm.updateAlarm(web,pi)
     blind.updateBlinds()	
+<<<<<<< HEAD
     cam.updateStatus(web)
 
 
+=======
+#    camera.updateStatus(web)
+    print 'loop'
+>>>>>>> 9ad586861bc71739fe933784a6365b3d083f7681

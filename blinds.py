@@ -44,11 +44,11 @@ class blinds:
     def updateBlinds(self):
         for blind in self.blinds:
             if blind['status'] and self.blindsStatus[self.index] == 1 :
-                print 'open'
+                print 'Blinds opening'
                 self.open()
                 self.blindsStatus[self.index] = 0
             elif not blind['status'] and self.blindsStatus[self.index] == 0:
-                print 'close'
+                print 'Blinds closing'
                 self.close()
                 self.blindsStatus[self.index] = 1
             self.index = self.index + 1

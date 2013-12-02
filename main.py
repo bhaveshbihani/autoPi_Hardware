@@ -62,23 +62,15 @@ else:
 pi.updatePiInfo(web,light,blind,alarm)  
 alarm.initPorts()
 alarm.updateStatus() 
-light.setPins() 
-<<<<<<< HEAD
-cam.startCameraServer()
+light.setPins()
+#cam.startCameraServer()
 blind.initStatus()
-=======
-#camera.startCameraServer()
->>>>>>> 9ad586861bc71739fe933784a6365b3d083f7681
+
 while True:
     pi.updatePiInfo(web,light,blind,alarm)
     light.updateStatus()
     alarm.updateAlarm(web,pi)
     blind.updateBlinds()	
-<<<<<<< HEAD
-    cam.updateStatus(web)
+#    cam.updateStatus(web)
 
-
-=======
-#    camera.updateStatus(web)
     print 'loop'
->>>>>>> 9ad586861bc71739fe933784a6365b3d083f7681

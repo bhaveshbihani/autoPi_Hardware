@@ -24,11 +24,7 @@ class alarm:
 			'status':False,
 			'gpio':GPIO,
 			'label':label,
-<<<<<<< HEAD
 			'entrance-type' :type
-=======
-			'entrance_type' :type
->>>>>>> 9ad586861bc71739fe933784a6365b3d083f7681
 			}
         if webServer.postToDatabase(data,self.alarmEndPoint):
             return 'Alarm with GPIO: ' + str(GPIO) + ' successfully registered'

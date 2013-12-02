@@ -5,6 +5,7 @@ class error:
 	def __init__(self):
 		io.setmode(io.BCM)
 		io.setup(18,io.OUT)
+		io.output(18,io.LOW)
 
 	def setNoNetworkError(self):
 		print 'No network'

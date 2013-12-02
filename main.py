@@ -15,9 +15,9 @@ from error import *
 import urllib2
 
 web=webServer()	
+err = error()
 #Check network connection
 if not web.testNetwork():
-    err = error()
     err.setNoNetworkError()
 
 homepath = '/home/pi/'
@@ -50,7 +50,6 @@ else:
     web.setAuth()
     pi = raspberryPi(web)
     if not pi.response:
-        err = error()
         err.setLoginError()	
     light = light()
     cam = camera()

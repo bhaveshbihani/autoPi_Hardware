@@ -11,17 +11,14 @@ from camera import *
 from alarm import *
 from blinds import *
 from gui import *
+from error import *
 import urllib2
 
-def setNoInternetError():
-    tkMessageBox.showinfo('Error','No Internet Connection')
-    print 'No internet'
-    exit(2)
-
 web=webServer()	
+#Check network connection
 if not web.testNetwork():
-    print 'No internet'
-    setNoInternetError()
+    err = error()
+    err.setNoNetworkError()
 
 homepath = '/home/pi/'
 print homepath
@@ -52,14 +49,17 @@ else:
     web.setPassword(password)
     web.setAuth()
     pi = raspberryPi(web)
+    if not pi.response:
+        err = error()
+        err.setLoginError()	
     light = light()
     cam = camera()
     alarm = alarm()
     blind = blinds()
 
 pi.updatePiInfo(web,light,blind,alarm)  
-alarm.updateStatus() 
 alarm.initPorts()
+alarm.updateStatus() 
 light.setPins() 
 #camera.startCameraServer()
 while True:

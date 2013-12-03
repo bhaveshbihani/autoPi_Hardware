@@ -5,7 +5,7 @@ from webServer import *
 from time import sleep
 
 class blinds:
-    time = .0015
+    time = .0005
     runTime = 1.5
     blinds = ''
     blindsEndPoint = '/blinds/?format=json'
@@ -32,6 +32,15 @@ class blinds:
     def updateBlindInfo(self,blind):
         self.blinds = blind
     
+    def initStatus(self):
+        for blind in self.blinds:
+            if blind['status']:
+                self.blindsStatus[self.index] = 0
+            else:
+                self.blindsStatus[self.index] = 1
+            self.index = self.index + 1
+        self.index = 0
+
     def updateBlinds(self):
         for blind in self.blinds:
             if blind['status'] and self.blindsStatus[self.index] == 1 :

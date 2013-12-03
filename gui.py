@@ -41,6 +41,7 @@ class registerGUI:
             return 
         self.createConfig()
         print self.SaveUser(self.homepath,self.username.get(),self.password.get())
+        root.destroy()		
         try:
             root.quit()		
         except:

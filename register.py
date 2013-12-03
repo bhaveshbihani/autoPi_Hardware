@@ -16,6 +16,8 @@ class register:
         print light.registerLight(8,'Bed Room',webServer,raspberryPi)
         camera.setIpAddress('69.243.172.96')
         print camera.registerCamera(webServer,raspberryPi,'Living Room')
+        print alarm.registerAlarm(24,'Front Door','door',webServer,raspberryPi)
+        print blind.registerBlinds(5,'Living Room',raspberryPi,webServer)
         print alarm.registerAlarm(22,'Front Door','door',webServer,raspberryPi)
         print alarm.registerAlarm(17,'Living Room','window',webServer,raspberryPi)
         print blind.registerBlinds(5,'Living Room',raspberryPi,webServer)

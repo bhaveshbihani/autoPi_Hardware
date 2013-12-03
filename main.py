@@ -35,10 +35,10 @@ if not os.path.exists(homepath + '/autopi.config'):
     
     pi = raspberryPi(web)
     light = light()
-    camera = camera()
+    cam = camera()
     alarm = alarm()
     blind = blinds()
-    reg = register(web,pi,light,camera,alarm,blind)
+    reg = register(web,pi,light,cam,alarm,blind)
 else:
     config = ConfigParser.ConfigParser() 
     config.read(homepath+'/autopi.config')
@@ -56,15 +56,20 @@ else:
     alarm = alarm()
     blind = blinds()
 
+
+#reg = register(web,pi,light,cam,alarm,blind)
 pi.updatePiInfo(web,light,blind,alarm)  
 alarm.initPorts()
 alarm.updateStatus() 
-light.setPins() 
-#camera.startCameraServer()
+light.setPins()
+#cam.startCameraServer()
+blind.initStatus()
+
 while True:
     pi.updatePiInfo(web,light,blind,alarm)
     light.updateStatus()
     alarm.updateAlarm(web,pi)
     blind.updateBlinds()	
-#    camera.updateStatus(web)
+#    cam.updateStatus(web)
+
     print 'loop'

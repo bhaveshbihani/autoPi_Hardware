@@ -1,5 +1,6 @@
 import RPi.GPIO as io
 import time
+import urllib2
 
 class error:
 	def __init__(self):
@@ -25,3 +26,14 @@ class error:
 			time.sleep(delay)
 			io.output(18,io.LOW)
 			time.sleep(delay)
+			print 'Network connection: ' +  str(self.testNetwork())
+			if self.testNetwork():
+				break
+
+	def testNetwork(self):
+		try:
+			response = urllib2.urlopen('http://74.125.228.100',timeout=1)
+			return True
+		except urllib2.URLError as err:
+			pass
+		return False

@@ -12,6 +12,7 @@ class registerGUI:
     homepath = '/home/pi'  
     loginEndPoint = '/user/?format=json'  
     def __init__(self, master,webServer):
+        self.root = master
         frame = Frame(master)
         frame.pack()
         Label(frame, text='Username').grid(row=0, column=0)
@@ -41,24 +42,11 @@ class registerGUI:
             return 
         self.createConfig()
         print self.SaveUser(self.homepath,self.username.get(),self.password.get())
-        root.destroy()		
         try:
-            root.quit()		
+            self.root.destroy()		
         except:
             tkMessageBox.showinfo('Registration Complete','Registration successful\nPlease close all windows.')
    
-	
-    def setNoInternetError(self):
-        tkMessageBox.showinfo('Error','No internet')
-        print('No internet')
-
-    def setLoginError(self):
-        tkMessageBox.showinfo('Error','Login failed')
-        print('Login error')
-
-    def setRegisterError(self):
-        tkMessageBox.showinfo('Error','Could not register ' + component + 'component.')
-    
     def SaveUser(self,path,username,password):
         print('In autoPiStartup.SaveUser')
         config = ConfigParser.ConfigParser()

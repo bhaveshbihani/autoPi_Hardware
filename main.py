@@ -17,8 +17,9 @@ import urllib2
 web=webServer()	
 err = error()
 #Check network connection
-if not web.testNetwork():
-    err.setNoNetworkError()
+print 'err.testNetwork: '
+print err.testNetwork()
+#    err.setNoNetworkError()
 
 homepath = '/home/pi/'
 print homepath
@@ -60,7 +61,7 @@ else:
 #reg = register(web,pi,light,cam,alarm,blind)
 pi.updatePiInfo(web,light,blind,alarm)  
 alarm.initPorts()
-alarm.updateStatus() 
+alarm.updateStatus(web,pi) 
 light.setPins()
 #cam.startCameraServer()
 blind.initStatus()
@@ -72,4 +73,3 @@ while True:
     blind.updateBlinds()	
 #    cam.updateStatus(web)
 
-    print 'loop'

@@ -31,7 +31,7 @@ class raspberryPi:
         alarm.updateAlarmInfo(response.json()['objects'][0]['entrance'])
       
     def registerPi(self,webServer):
-        data = {'uuid': 4536634} #self.mac}
+        data = {'uuid': 453665356334} #self.mac}
         if webServer.postToDatabase(data,self.piEndPoint):
             return 'RaspberryPi successfully register'
         else:

@@ -10,7 +10,7 @@ class alarm:
     alarmCount = 0
     alarms = []
     response = ''
-    statusValues = {1:True,0:False}
+    statusValues = {0:True,1:False}
     alarmStatus = [2,2,2,2,2]
     index = 0
     
@@ -24,7 +24,7 @@ class alarm:
 			'status':False,
 			'gpio':GPIO,
 			'label':label,
-			'entrance-type' :type
+			'entrance_type' :type
 			}
         if webServer.postToDatabase(data,self.alarmEndPoint):
             return 'Alarm with GPIO: ' + str(GPIO) + ' successfully registered'
@@ -37,12 +37,14 @@ class alarm:
 	#Only need updateAlarmInfo and updateAlarm to detect change in sensor
 	#using this function along with the other two cuases alarmStatus to be
 	#overwritten with new value before it is checked in updateAlarm 
-    def updateStatus(self):
+    def updateStatus(self,webServer,raspberryPi):
         for alarm in self.alarms:
-            if alarm['alarm']:
-                self.alarmStatus[self.index] =  io.input(alarm['gpio'])
-            else:
-                self.alarmStatus[self.index] = 2
+            self.alarmStatus[self.index] =  io.input(alarm['gpio'])
+            data = {'raspberry_pi_id': raspberryPi.getId(),
+                     'status': self.statusValues[self.alarmStatus[self.index]]
+                   }
+            endPoint = '/entrance/' + str(alarm['id']) + '/?format=json'
+            self.response = webServer.putToDatabase(data,endPoint)
             self.index = self.index + 1
         self.index = 0
     
@@ -58,8 +60,6 @@ class alarm:
                     endPoint = '/entrance/' + str(alarm['id']) + '/?format=json'
                     self.response = webServer.putToDatabase(data,endPoint)
                     print 'Break in'
-                else:
-                    print 'System Normal'
             self.index= self.index + 1
         self.index = 0
                     

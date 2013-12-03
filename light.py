@@ -25,7 +25,6 @@ class light:
             gpioPin = light['gpio']
             if light['status'] == True:
                 io.output(gpioPin,io.HIGH)
-                print 'light on'
             else:
                 io.output(gpioPin,io.LOW)
     

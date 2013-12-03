@@ -1,5 +1,6 @@
 import sys
 import json
+from error import *
 import requests
 from requests.auth import HTTPBasicAuth
 import urllib2
@@ -30,33 +31,70 @@ class webServer:
         
     def postToDatabase(self,data,endPoint):
         self.setData(data)
-        self.response = requests.post(
+        try:
+            self.response = requests.post(
                 self.urlRoot+endPoint,
-		data=json.dumps(data),
-		headers={'Content-type': 'application/json'},
-		auth=self.auth
-        )
+		        data=json.dumps(data),
+		        headers={'Content-type': 'application/json'},
+		        auth=self.auth,
+                timeout = 5
+                )
+        except:
+            err = error()
+            err.setNoNetworkError()
+            self.response = requests.post(
+                self.urlRoot+endPoint,
+		        data=json.dumps(data),
+		        headers={'Content-type': 'application/json'},
+		        auth=self.auth,
+                timeout = 10
+                )
+            
         if self.checkResponse(self.response):
             return True
         else:
             return False
+
     def putToDatabase(self,data,endPoint):
         self.setData(data)
-        self.response = requests.put(
+        try:
+            self.response = requests.put(
                 self.urlRoot+endPoint,
-		data=json.dumps(data),
-		headers={'Content-type': 'application/json'},
-		auth=self.auth
-        )
+		        data=json.dumps(data),
+		        headers={'Content-type': 'application/json'},
+		        auth=self.auth,
+                timeout = 5
+                )
+        except:
+            err = error()
+            err.setNoNetworkError() 
+            self.response = requests.put(
+                self.urlRoot+endPoint,
+		        data=json.dumps(data),
+		        headers={'Content-type': 'application/json'},
+		        auth=self.auth,
+                timeout = 10
+                )
+            
         if self.checkResponse(self.response):
             return True
         else:
             return False
     def getFromDatabase(self,endPoint):
-        self.response = requests.get(
+        try:
+            self.response = requests.get(
                self.urlRoot + endPoint,
-               auth=self.auth
-        )
+               auth=self.auth,
+               timeout = 5
+            )
+        except:
+            err = error()
+            err.setNoNetworkError()
+            self.response = requests.get(
+               self.urlRoot + endPoint,
+               auth=self.auth,
+               timeout = 10
+            )
         if self.checkResponse(self.response):
             return self.response
         else:
@@ -67,12 +105,3 @@ class webServer:
                 return False
         else:
             return True
-    def testNetwork(self):
-        try:
-            response = urllib2.urlopen('http://74.125.228.100',timeout=1)
-            return True
-        except urllib2.URLError as err:
-            pass
-        return False
-        
-
